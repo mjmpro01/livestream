@@ -37,6 +37,31 @@ app.post("/end_stream_2", function (req, res) {
       if (stderr) console.log(`stderr: ${stderr}`);
   });
 });
+
+app.get("/end_stream/:app", function (req, res) {
+  const app = req.params.app;
+  console.log("app", app);
+  const date = new Date();
+  const dateString = date.toString();
+  // Replace these paths with the actual paths you want to use
+  const SOURCE_DIR=`/tmp/hls/${app}`;
+  const DEST_DIR=`/tmp/recordings/${app}/${dateString}`
+
+  // Construct the command to execute the script with SOURCE_DIR and DEST_DIR as arguments
+  const command = `/tmp/move_hls_to_recordings_live_2.sh "${SOURCE_DIR}" "${DEST_DIR}"`;
+
+  exec(command, (error, stdout, stderr) => {
+      if (error) {
+          console.error(`Execution error: ${error}`);
+          res.status(500).send("Có lỗi xảy ra trong quá trình chuyển file");
+          return;
+      }
+      if (stdout) console.log(`stdout: ${stdout}`);
+      if (stderr) console.log(`stderr: ${stderr}`);
+      res.status(200).send("Chuyển file thành công");
+  });
+  });
+
 app.listen(8000, function () {
   console.log("Listening on port 8000!");
 });
