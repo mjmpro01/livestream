@@ -2,7 +2,7 @@
 
 # Assuming $1 is SOURCE_DIR and $2 is DEST_DIR
 SOURCE_DIR="$1"
-rm -rf "$SOURCE_DIR"
+rm -rf "$SOURCE_DIR"/*
 echo "Deleted the compressed directory: $SOURCE_DIR"
 # DEST_DIR="$2"
 
